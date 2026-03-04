@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Formulario de Procesos — Darwin IA · Grupo Rapid</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0f2144;
+    --blue: #1a3d7c;
+    --accent: #e8500a;
+    --accent-light: #fff0ea;
+    --gray-100: #f7f8fa;
+    --gray-200: #edf0f4;
+    --gray-400: #9aa3b0;
+    --gray-600: #4a5568;
+    --gray-800: #1e2530;
+    --white: #ffffff;
+    --radius: 10px;
+    --shadow: 0 2px 16px rgba(15,33,68,0.08);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--gray-100);
+    color: var(--gray-800);
+    min-height: 100vh;
+  }
+
+  /* HEADER */
+  .site-header {
+    background: var(--navy);
+    padding: 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 20px rgba(0,0,0,0.25);
+  }
+  .header-inner {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 18px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .logo-area { display: flex; align-items: center; gap: 14px; }
+  .logo-icon {
+    width: 38px; height: 38px;
+    background: var(--accent);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px; font-weight: 700; color: white;
+    font-family: 'DM Serif Display', serif;
+  }
+  .logo-text { color: white; }
+  .logo-text strong { font-size: 16px; font-weight: 600; display: block; line-height: 1.2; }
+  .logo-text span { font-size: 12px; color: rgba(255,255,255,0.55); font-weight: 300; }
+  .badge {
+    background: rgba(232,80,10,0.18);
+    color: #ffb38a;
+    border: 1px solid rgba(232,80,10,0.35);
+    font-size: 11px;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 20px;
+    letter-spacing: 0.5px;
+  }
+
+  /* HERO */
+  .hero {
+    background: linear-gradient(135deg, var(--navy) 0%, var(--blue) 100%);
+    padding: 52px 32px 48px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    width: 500px; height: 500px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(232,80,10,0.12) 0%, transparent 70%);
+    top: -200px; right: -100px;
+    pointer-events: none;
+  }
+  .hero h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 32px;
+    color: white;
+    line-height: 1.2;
+    margin-bottom: 12px;
+  }
+  .hero h1 em { color: #ffb38a; font-style: normal; }
+  .hero p {
+    color: rgba(255,255,255,0.68);
+    font-size: 15px;
+    max-width: 520px;
+    margin: 0 auto 24px;
+    line-height: 1.65;
+    font-weight: 300;
+  }
+  .steps-row {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 8px;
+  }
+  .step-chip {
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.18);
+    color: rgba(255,255,255,0.85);
+    font-size: 12px;
+    padding: 6px 14px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .step-chip .num {
+    background: var(--accent);
+    color: white;
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    font-size: 10px;
+    font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  /* FORM WRAP */
+  .form-wrap {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 40px 24px 80px;
+  }
+
+  /* SECTION */
+  .form-section {
+    background: var(--white);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    margin-bottom: 24px;
+    overflow: hidden;
+    border: 1px solid var(--gray-200);
+    animation: fadeUp 0.4s ease both;
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .form-section:nth-child(2) { animation-delay: 0.05s; }
+  .form-section:nth-child(3) { animation-delay: 0.10s; }
+  .form-section:nth-child(4) { animation-delay: 0.15s; }
+  .form-section:nth-child(5) { animation-delay: 0.20s; }
+  .form-section:nth-child(6) { animation-delay: 0.25s; }
+
+  .section-header {
+    background: var(--navy);
+    padding: 18px 28px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .section-icon {
+    width: 34px; height: 34px;
+    background: var(--accent);
+    border-radius: 7px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px;
+    flex-shrink: 0;
+  }
+  .section-header h2 {
+    color: white;
+    font-size: 15px;
+    font-weight: 600;
+  }
+  .section-header p {
+    color: rgba(255,255,255,0.5);
+    font-size: 12px;
+    margin-top: 1px;
+    font-weight: 300;
+  }
+
+  .section-body { padding: 28px; }
+
+  /* FIELD */
+  .field { margin-bottom: 22px; }
+  .field:last-child { margin-bottom: 0; }
+  label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--navy);
+    margin-bottom: 7px;
+    letter-spacing: 0.1px;
+  }
+  label .req { color: var(--accent); margin-left: 3px; }
+  .hint {
+    font-size: 12px;
+    color: var(--gray-400);
+    font-weight: 400;
+    margin-top: -4px;
+    margin-bottom: 8px;
+    line-height: 1.5;
+  }
+
+  input[type="text"],
+  input[type="email"],
+  input[type="tel"],
+  select,
+  textarea {
+    width: 100%;
+    padding: 11px 14px;
+    border: 1.5px solid var(--gray-200);
+    border-radius: 8px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    color: var(--gray-800);
+    background: var(--gray-100);
+    transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+    outline: none;
+  }
+  input:focus, select:focus, textarea:focus {
+    border-color: var(--blue);
+    background: white;
+    box-shadow: 0 0 0 3px rgba(26,61,124,0.08);
+  }
+  textarea { resize: vertical; min-height: 90px; line-height: 1.6; }
+  select { cursor: pointer; appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%239aa3b0' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    padding-right: 36px;
+  }
+
+  /* GRID */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  @media(max-width:600px) { .grid-2 { grid-template-columns: 1fr; } }
+
+  /* PROCESS BLOCK */
+  .process-block {
+    border: 1.5px solid var(--gray-200);
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 16px;
+  }
+  .process-block-header {
+    background: var(--gray-200);
+    padding: 10px 16px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--navy);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .process-num {
+    background: var(--accent);
+    color: white;
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    font-size: 11px;
+    font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .process-block-body { padding: 18px; background: white; }
+
+  /* RADIO / CHECKBOX GROUPS */
+  .options-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 4px;
+  }
+  .opt-btn {
+    padding: 8px 16px;
+    border: 1.5px solid var(--gray-200);
+    border-radius: 20px;
+    font-size: 13px;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 500;
+    color: var(--gray-600);
+    cursor: pointer;
+    background: var(--gray-100);
+    transition: all 0.15s;
+    user-select: none;
+  }
+  .opt-btn:hover { border-color: var(--blue); color: var(--blue); background: #eef2fb; }
+  .opt-btn.selected { background: var(--navy); color: white; border-color: var(--navy); }
+  .opt-btn.selected.accent { background: var(--accent); border-color: var(--accent); }
+
+  /* YES/NO */
+  .yn-group { display: flex; gap: 10px; margin-top: 4px; }
+  .yn-btn {
+    flex: 1;
+    padding: 10px;
+    border: 1.5px solid var(--gray-200);
+    border-radius: 8px;
+    font-size: 13px;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 600;
+    cursor: pointer;
+    text-align: center;
+    background: var(--gray-100);
+    color: var(--gray-600);
+    transition: all 0.15s;
+    user-select: none;
+  }
+  .yn-btn:hover { border-color: var(--blue); }
+  .yn-btn.yes.selected { background: #e6f4ea; border-color: #2e7d32; color: #2e7d32; }
+  .yn-btn.no.selected  { background: #fdecea; border-color: #c62828; color: #c62828; }
+
+  /* DIVIDER */
+  .divider {
+    border: none;
+    border-top: 1.5px dashed var(--gray-200);
+    margin: 22px 0;
+  }
+
+  /* INFO BOX */
+  .info-box {
+    background: var(--accent-light);
+    border: 1px solid #ffd4b8;
+    border-radius: 8px;
+    padding: 14px 16px;
+    font-size: 13px;
+    color: #7a3010;
+    line-height: 1.6;
+    margin-bottom: 22px;
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+  }
+  .info-box .ico { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+
+  /* SUBMIT */
+  .submit-area {
+    text-align: center;
+    padding: 32px 0 0;
+  }
+  .btn-submit {
+    background: var(--accent);
+    color: white;
+    border: none;
+    padding: 16px 48px;
+    border-radius: 10px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    letter-spacing: 0.2px;
+    transition: all 0.2s;
+    box-shadow: 0 4px 16px rgba(232,80,10,0.3);
+  }
+  .btn-submit:hover { background: #c94008; transform: translateY(-1px); box-shadow: 0 6px 20px rgba(232,80,10,0.4); }
+  .submit-note {
+    font-size: 12px;
+    color: var(--gray-400);
+    margin-top: 12px;
+  }
+
+  /* SUCCESS */
+  .success-screen {
+    display: none;
+    text-align: center;
+    padding: 60px 32px;
+    max-width: 500px;
+    margin: 0 auto;
+    animation: fadeUp 0.5s ease both;
+  }
+  .success-screen .check {
+    width: 72px; height: 72px;
+    background: #e6f4ea;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 32px;
+    margin: 0 auto 24px;
+  }
+  .success-screen h2 { font-family: 'DM Serif Display', serif; font-size: 28px; color: var(--navy); margin-bottom: 12px; }
+  .success-screen p { color: var(--gray-400); font-size: 15px; line-height: 1.6; }
+
+  /* PROGRESS */
+  .progress-bar-wrap {
+    background: rgba(255,255,255,0.12);
+    border-radius: 20px;
+    height: 4px;
+    width: 200px;
+    margin: 0 auto;
+    overflow: hidden;
+  }
+  .progress-bar {
+    height: 100%;
+    background: var(--accent);
+    border-radius: 20px;
+    transition: width 0.4s ease;
+    width: 0%;
+  }
+  .progress-label {
+    color: rgba(255,255,255,0.5);
+    font-size: 11px;
+    text-align: center;
+    margin-top: 6px;
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <div class="logo-area">
+      <div class="logo-icon">D</div>
+      <div class="logo-text">
+        <strong>Darwin IA</strong>
+        <span>Grupo Rapid</span>
+      </div>
+    </div>
+    <div class="badge">Versión ALBA</div>
+  </div>
+</header>
+
+<div class="hero">
+  <h1>Levantamiento de <em>Procesos</em><br>para Darwin IA</h1>
+  <p>Este formulario nos ayuda a entender cómo trabaja tu área para que Darwin pueda atender a tus clientes correctamente. No toma más de 10 minutos.</p>
+  <div class="steps-row">
+    <div class="step-chip"><span class="num">1</span> Tus datos</div>
+    <div class="step-chip"><span class="num">2</span> Tu empresa</div>
+    <div class="step-chip"><span class="num">3</span> Servicios</div>
+    <div class="step-chip"><span class="num">4</span> Procesos</div>
+    <div class="step-chip"><span class="num">5</span> Clientes</div>
+    <div class="step-chip"><span class="num">6</span> Escalamiento</div>
+  </div>
+  <div style="margin-top:20px">
+    <div class="progress-bar-wrap"><div class="progress-bar" id="progressBar"></div></div>
+    <div class="progress-label" id="progressLabel">0% completado</div>
+  </div>
+</div>
+
+<div class="form-wrap" id="formWrap">
+
+  <!-- SECCIÓN 1: DATOS DEL ASESOR -->
+  <div class="form-section">
+    <div class="section-header">
+      <div class="section-icon">👤</div>
+      <div>
+        <h2>Sección 1 — Tus datos</h2>
+        <p>Para saber quién llenó este formulario</p>
+      </div>
+    </div>
+    <div class="section-body">
+      <div class="grid-2">
+        <div class="field">
+          <label>Nombre completo <span class="req">*</span></label>
+          <input type="text" id="nombre" placeholder="Ej. Juan Pérez López">
+        </div>
+        <div class="field">
+          <label>Puesto / Rol <span class="req">*</span></label>
+          <input type="text" id="puesto" placeholder="Ej. Asesor Comercial">
+        </div>
+      </div>
+      <div class="grid-2">
+        <div class="field">
+          <label>Correo electrónico <span class="req">*</span></label>
+          <input type="email" id="correo" placeholder="Ej. juan@gruporapid.com">
+        </div>
+        <div class="field">
+          <label>Teléfono (con lada) <span class="req">*</span></label>
+          <input type="tel" id="telefono" placeholder="Ej. 664-123-4567">
+        </div>
+      </div>
+      <div class="field">
+        <label>Subempresa <span class="req">*</span></label>
+        <div class="hint">¿En cuál de las empresas del grupo trabajas?</div>
+        <div class="options-group" id="subempresaGroup">
+          <div class="opt-btn" onclick="selectOne(this,'subempresaGroup')">Rapid Frio</div>
+          <div class="opt-btn" onclick="selectOne(this,'subempresaGroup')">KTS — Kitchen Total Solution</div>
+          <div class="opt-btn" onclick="selectOne(this,'subempresaGroup')">Rapid Pools</div>
+          <div class="opt-btn" onclick="selectOne(this,'subempresaGroup')">Fumipest</div>
+          <div class="opt-btn" onclick="selectOne(this,'subempresaGroup')">ALFA</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECCIÓN 2: INFO DE LA EMPRESA -->
+  <div class="form-section">
+    <div class="section-header">
+      <div class="section-icon">🏢</div>
+      <div>
+        <h2>Sección 2 — Tu empresa</h2>
+        <p>Contexto general para que Darwin se presente bien</p>
+      </div>
+    </div>
+    <div class="section-body">
+      <div class="field">
+        <label>¿Cómo describirías tu empresa en 2-3 oraciones? <span class="req">*</span></label>
+        <div class="hint">Escribe como si le explicaras a un cliente nuevo qué hacen y por qué son buenos en ello.</div>
+        <textarea id="descripcionEmpresa" placeholder="Ej. Somos especialistas en mantenimiento y construcción de albercas residenciales y comerciales en Tijuana. Llevamos más de 10 años en el mercado y ofrecemos garantía en todos nuestros servicios..."></textarea>
+      </div>
+      <div class="field">
+        <label>¿En qué ciudades o zonas operan? <span class="req">*</span></label>
+        <input type="text" id="zonas" placeholder="Ej. Tijuana, Tecate, Rosarito, Ensenada">
+      </div>
+      <div class="grid-2">
+        <div class="field">
+          <label>Horario de atención</label>
+          <input type="text" id="horario" placeholder="Ej. Lunes a Viernes 8am - 6pm, Sábados 9am - 2pm">
+        </div>
+        <div class="field">
+          <label>¿Tienen emergencias fuera de horario?</label>
+          <div class="yn-group">
+            <div class="yn-btn yes" onclick="selectYN(this,'emergencia')">✓ Sí</div>
+            <div class="yn-btn no"  onclick="selectYN(this,'emergencia')">✗ No</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECCIÓN 3: SERVICIOS -->
+  <div class="form-section">
+    <div class="section-header">
+      <div class="section-icon">🛠️</div>
+      <div>
+        <h2>Sección 3 — Servicios que ofrecen</h2>
+        <p>Para que Darwin pueda informar y cotizar correctamente</p>
+      </div>
+    </div>
+    <div class="section-body">
+      <div class="info-box">
+        <span class="ico">💡</span>
+        <span>Lista los servicios que ofreces actualmente. Para cada uno, indica si Darwin puede dar el precio directamente o si debe pasarlo con el asesor.</span>
+      </div>
+
+      <div id="serviciosContainer">
+        <div class="process-block">
+          <div class="process-block-header"><span class="process-num">1</span> Servicio principal</div>
+          <div class="process-block-body">
+            <div class="grid-2">
+              <div class="field">
+                <label>Nombre del servicio <span class="req">*</span></label>
+                <input type="text" placeholder="Ej. Mantenimiento mensual de alberca">
+              </div>
+              <div class="field">
+                <label>Precio aproximado</label>
+                <input type="text" placeholder="Ej. $800 - $1,500 / mes">
+              </div>
+            </div>
+            <div class="field">
+              <label>¿Qué incluye este servicio?</label>
+              <textarea style="min-height:70px" placeholder="Ej. Limpieza, balance de químicos, revisión de bomba y filtro, reporte mensual..."></textarea>
+            </div>
+            <div class="field">
+              <label>¿Darwin puede dar el precio sin preguntar al asesor?</label>
+              <div class="yn-group">
+                <div class="yn-btn yes" onclick="selectYN(this,'precio1')">✓ Sí, puede dar el precio</div>
+                <div class="yn-btn no"  onclick="selectYN(this,'precio1')">✗ No, pasar con asesor</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <button type="button" onclick="addServicio()" style="background:none;border:1.5px dashed var(--gray-400);padding:10px 20px;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:13px;color:var(--gray-400);cursor:pointer;width:100%;margin-top:4px;transition:all 0.2s" onmouseover="this.style.borderColor='var(--blue)';this.style.color='var(--blue)'" onmouseout="this.style.borderColor='var(--gray-400)';this.style.color='var(--gray-400)'">
+        + Agregar otro servicio
+      </button>
+    </div>
+  </div>
+
+  <!-- SECCIÓN 4: PROCESOS DE CONVERSACIÓN -->
+  <div class="form-section">
+    <div class="section-header">
+      <div class="section-icon">💬</div>
+      <div>
+        <h2>Sección 4 — Cómo atiendes a los clientes</h2>
+        <p>El flujo real de una conversación típica</p>
+      </div>
+    </div>
+    <div class="section-body">
+      <div class="info-box">
+        <span class="ico">💡</span>
+        <span>Piensa en las últimas conversaciones que tuviste con clientes. ¿Cómo suelen iniciar? ¿Qué preguntas hacen? ¿Cómo cierras?</span>
+      </div>
+
+      <div class="field">
+        <label>¿Por dónde te contactan más los clientes? <span class="req">*</span></label>
+        <div class="options-group" id="canalesGroup">
+          <div class="opt-btn" onclick="selectMany(this)">📱 WhatsApp</div>
+          <div class="opt-btn" onclick="selectMany(this)">📞 Llamada telefónica</div>
+          <div class="opt-btn" onclick="selectMany(this)">📧 Correo electrónico</div>
+          <div class="opt-btn" onclick="selectMany(this)">📘 Facebook</div>
+          <div class="opt-btn" onclick="selectMany(this)">📸 Instagram</div>
+          <div class="opt-btn" onclick="selectMany(this)">🌐 Página web</div>
+        </div>
+      </div>
+
+      <hr class="divider">
+
+      <div class="field">
+        <label>¿Con qué frase o pregunta suelen iniciar los clientes? <span class="req">*</span></label>
+        <div class="hint">Escribe las 3-5 frases más comunes con las que te escriben o llaman.</div>
+        <textarea id="frasesInicio" placeholder="Ej.&#10;• 'Buenos días, ¿cuánto cuesta el mantenimiento?'&#10;• 'Quiero una cotización para mi alberca'&#10;• 'Tienen servicio en Rosarito?'&#10;• 'Mi alberca está verde, ¿qué hago?'"></textarea>
+      </div>
+
+      <div class="field">
+        <label>Describe paso a paso cómo atiendes a un cliente nuevo desde que te contacta hasta que cierra <span class="req">*</span></label>
+        <div class="hint">No te preocupes por el formato, escríbelo como lo harías explicándole a un compañero nuevo.</div>
+        <textarea id="procesoCompleto" style="min-height:140px" placeholder="Ej.&#10;1. El cliente me escribe por WhatsApp&#10;2. Le pregunto qué tipo de servicio necesita y el tamaño de su alberca&#10;3. Le doy el precio según el tipo&#10;4. Si le interesa, agendamos una visita para revisar&#10;5. Después de la visita mando la cotización formal&#10;6. Si acepta, coordinamos la primera fecha de servicio"></textarea>
+      </div>
+
+      <div class="field">
+        <label>¿Qué información necesitas del cliente para poder darle una cotización? <span class="req">*</span></label>
+        <div class="hint">Lista todo lo que normalmente preguntas antes de dar un precio.</div>
+        <textarea id="datosParaCotizar" placeholder="Ej.&#10;• Nombre completo&#10;• Dirección&#10;• Tipo de alberca (residencial / comercial)&#10;• Tamaño aproximado (m²)&#10;• Frecuencia deseada (semanal / quincenal / mensual)&#10;• ¿Tiene equipo (bomba, calentador)?"></textarea>
+      </div>
+
+      <div class="field">
+        <label>¿Qué preguntas te hacen con más frecuencia? <span class="req">*</span></label>
+        <div class="hint">Escribe también cuál es la respuesta correcta a cada una.</div>
+        <textarea id="preguntasFrecuentes" style="min-height:160px" placeholder="Ej.&#10;P: ¿Cuánto tarda en limpiar el agua verde?&#10;R: Depende del nivel de contaminación, normalmente entre 2 y 5 días con tratamiento de choque.&#10;&#10;P: ¿Trabajan en Ensenada?&#10;R: Sí, tenemos cobertura en toda la zona Norte de Baja California.&#10;&#10;P: ¿Tienen garantía?&#10;R: Sí, garantizamos el resultado de cada servicio. Si el agua no queda bien, regresamos sin costo."></textarea>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECCIÓN 5: TIPOS DE CLIENTES -->
+  <div class="form-section">
+    <div class="section-header">
+      <div class="section-icon">🎯</div>
+      <div>
+        <h2>Sección 5 — Tus clientes</h2>
+        <p>Para que Darwin califique bien los prospectos</p>
+      </div>
+    </div>
+    <div class="section-body">
+      <div class="field">
+        <label>¿Cuál es el perfil de tu cliente ideal? <span class="req">*</span></label>
+        <div class="hint">Describe quién es tu mejor cliente (el que compra más, paga a tiempo, recomienda).</div>
+        <textarea id="clienteIdeal" placeholder="Ej. Dueño de casa con alberca en Tijuana o Rosarito, zona residencial, que busca un servicio confiable y no le importa pagar un poco más por calidad. Generalmente nos contactan por recomendación de vecinos."></textarea>
+      </div>
+
+      <div class="field">
+        <label>¿Qué tipo de cliente NO les conviene atender? <span class="req">*</span></label>
+        <div class="hint">Esto ayuda a Darwin a filtrar antes de pasarte el lead.</div>
+        <textarea id="clienteNoIdeal" placeholder="Ej. Clientes que solo buscan el precio más bajo, personas fuera de nuestra zona de cobertura, o quienes quieren pago hasta que vean resultados."></textarea>
+      </div>
+
+      <div class="field">
+        <label>¿Hay algo que Darwin NUNCA debe prometer al cliente?</label>
+        <div class="hint">Restricciones comerciales, precios que no puedes dar sin aprobación, etc.</div>
+        <textarea id="restricciones" placeholder="Ej.&#10;• No dar descuentos sin hablar con el gerente&#10;• No prometer fechas de inicio antes de confirmar disponibilidad&#10;• No dar precio de construcción sin visita previa"></textarea>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECCIÓN 6: ESCALAMIENTO -->
+  <div class="form-section">
+    <div class="section-header">
+      <div class="section-icon">🔁</div>
+      <div>
+        <h2>Sección 6 — Cuándo pasar el chat al asesor</h2>
+        <p>Define cuándo Darwin debe escalar la conversación</p>
+      </div>
+    </div>
+    <div class="section-body">
+      <div class="field">
+        <label>¿En qué situaciones sí o sí debe avisarte Darwin? <span class="req">*</span></label>
+        <div class="hint">Selecciona todas las que apliquen.</div>
+        <div class="options-group" id="escalarGroup">
+          <div class="opt-btn" onclick="selectMany(this)">El cliente quiere cerrar la venta</div>
+          <div class="opt-btn" onclick="selectMany(this)">El cliente tiene una queja seria</div>
+          <div class="opt-btn" onclick="selectMany(this)">El cliente pregunta algo que Darwin no sabe responder</div>
+          <div class="opt-btn" onclick="selectMany(this)">Es un cliente corporativo o contrato grande</div>
+          <div class="opt-btn" onclick="selectMany(this)">El cliente pide hablar con una persona</div>
+          <div class="opt-btn" onclick="selectMany(this)">Es una emergencia o urgencia</div>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>¿Hay alguna otra situación que no esté en la lista?</label>
+        <textarea id="otrasEscalar" style="min-height:70px" placeholder="Ej. Si el cliente menciona que viene de parte de algún proveedor o empresa conocida, también prefiero que me avisen..."></textarea>
+      </div>
+
+      <hr class="divider">
+
+      <div class="field">
+        <label>¿Cómo prefieres que te avise Darwin cuando necesite escalarte un chat?</label>
+        <div class="options-group" id="notifGroup">
+          <div class="opt-btn" onclick="selectOne(this,'notifGroup')">📱 WhatsApp</div>
+          <div class="opt-btn" onclick="selectOne(this,'notifGroup')">📧 Correo electrónico</div>
+          <div class="opt-btn" onclick="selectOne(this,'notifGroup')">🔔 Notificación en la app</div>
+          <div class="opt-btn" onclick="selectOne(this,'notifGroup')">📞 Llamada</div>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>¿Algo más que quieras que Darwin sepa sobre cómo trabajas? <span class="req">*</span></label>
+        <div class="hint">Aquí puedes agregar cualquier detalle importante que no cubrimos arriba.</div>
+        <textarea id="notasFinales" style="min-height:100px" placeholder="Ej. Tenemos temporada alta de junio a agosto. En diciembre bajamos mucho los precios. Los sábados solo atendemos emergencias. Siempre mandamos una foto del trabajo terminado..."></textarea>
+      </div>
+    </div>
+  </div>
+
+  <div class="submit-area">
+    <button class="btn-submit" onclick="submitForm()">Enviar información ✓</button>
+    <div class="submit-note">Al enviar confirmas que la información es correcta y actualizada.</div>
+  </div>
+
+</div>
+
+<!-- SUCCESS -->
+<div class="success-screen" id="successScreen">
+  <div class="check">✅</div>
+  <h2>¡Información recibida!</h2>
+  <p>Gracias por completar el formulario. El equipo de Darwin IA procesará tu información para construir los flujos de atención de <strong id="successEmpresa">tu empresa</strong>.</p>
+  <p style="margin-top:16px">Si necesitas agregar algo más, puedes contactar directamente al equipo de integración.</p>
+</div>
+
+<script>
+let servicioCount = 1;
+let ynStates = {};
+
+function selectOne(el, groupId) {
+  document.querySelectorAll('#' + groupId + ' .opt-btn').forEach(b => b.classList.remove('selected'));
+  el.classList.add('selected');
+  updateProgress();
+}
+
+function selectMany(el) {
+  el.classList.toggle('selected');
+  updateProgress();
+}
+
+function selectYN(el, key) {
+  const parent = el.closest('.yn-group');
+  parent.querySelectorAll('.yn-btn').forEach(b => b.classList.remove('selected'));
+  el.classList.add('selected');
+  ynStates[key] = el.classList.contains('yes') ? 'si' : 'no';
+  updateProgress();
+}
+
+function addServicio() {
+  servicioCount++;
+  const container = document.getElementById('serviciosContainer');
+  const idx = servicioCount;
+  const div = document.createElement('div');
+  div.className = 'process-block';
+  div.innerHTML = `
+    <div class="process-block-header"><span class="process-num">${idx}</span> Servicio ${idx}</div>
+    <div class="process-block-body">
+      <div class="grid-2">
+        <div class="field"><label>Nombre del servicio</label><input type="text" placeholder="Ej. Construcción de alberca"></div>
+        <div class="field"><label>Precio aproximado</label><input type="text" placeholder="Ej. Desde $80,000"></div>
+      </div>
+      <div class="field"><label>¿Qué incluye?</label><textarea style="min-height:70px" placeholder="Describe qué incluye..."></textarea></div>
+      <div class="field">
+        <label>¿Darwin puede dar el precio?</label>
+        <div class="yn-group">
+          <div class="yn-btn yes" onclick="selectYN(this,'precio${idx}')">✓ Sí, puede dar el precio</div>
+          <div class="yn-btn no" onclick="selectYN(this,'precio${idx}')">✗ No, pasar con asesor</div>
+        </div>
+      </div>
+    </div>`;
+  container.appendChild(div);
+}
+
+function updateProgress() {
+  const fields = [
+    document.getElementById('nombre')?.value,
+    document.getElementById('puesto')?.value,
+    document.getElementById('correo')?.value,
+    document.getElementById('telefono')?.value,
+    document.querySelector('#subempresaGroup .selected'),
+    document.getElementById('descripcionEmpresa')?.value,
+    document.getElementById('zonas')?.value,
+    document.querySelector('#canalesGroup .selected'),
+    document.getElementById('frasesInicio')?.value,
+    document.getElementById('procesoCompleto')?.value,
+    document.getElementById('datosParaCotizar')?.value,
+    document.getElementById('preguntasFrecuentes')?.value,
+    document.getElementById('clienteIdeal')?.value,
+    document.getElementById('clienteNoIdeal')?.value,
+    document.querySelector('#escalarGroup .selected'),
+    document.getElementById('notasFinales')?.value,
+  ];
+  const filled = fields.filter(f => f && (typeof f === 'string' ? f.trim() !== '' : true)).length;
+  const pct = Math.round((filled / fields.length) * 100);
+  document.getElementById('progressBar').style.width = pct + '%';
+  document.getElementById('progressLabel').textContent = pct + '% completado';
+}
+
+document.querySelectorAll('input, textarea, select').forEach(el => {
+  el.addEventListener('input', updateProgress);
+});
+
+async function submitForm() {
+  const required = [
+    { id: 'nombre', label: 'Nombre completo' },
+    { id: 'puesto', label: 'Puesto' },
+    { id: 'correo', label: 'Correo electrónico' },
+    { id: 'telefono', label: 'Teléfono' },
+    { id: 'descripcionEmpresa', label: 'Descripción de la empresa' },
+    { id: 'zonas', label: 'Zonas de operación' },
+    { id: 'frasesInicio', label: 'Frases de inicio' },
+    { id: 'procesoCompleto', label: 'Proceso de atención' },
+    { id: 'datosParaCotizar', label: 'Datos para cotizar' },
+    { id: 'preguntasFrecuentes', label: 'Preguntas frecuentes' },
+    { id: 'clienteIdeal', label: 'Cliente ideal' },
+    { id: 'clienteNoIdeal', label: 'Cliente no ideal' },
+    { id: 'notasFinales', label: 'Notas finales' },
+  ];
+
+  for (const f of required) {
+    const el = document.getElementById(f.id);
+    if (!el || !el.value.trim()) {
+      el?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      el?.focus();
+      el?.style && (el.style.borderColor = '#e8500a');
+      setTimeout(() => el && (el.style.borderColor = ''), 2000);
+      alert(`Por favor completa el campo: "${f.label}"`);
+      return;
+    }
+  }
+
+  const empresa = document.querySelector('#subempresaGroup .selected')?.textContent || 'No especificada';
+  const canales = [...document.querySelectorAll('#canalesGroup .selected')].map(e => e.textContent).join(', ') || 'No especificado';
+  const escalar = [...document.querySelectorAll('#escalarGroup .selected')].map(e => e.textContent).join(', ') || 'No especificado';
+  const notif   = document.querySelector('#notifGroup .selected')?.textContent || 'No especificado';
+  const emergencia = document.querySelector('.yn-btn.yes.selected') ? 'Sí' : 'No';
+
+  const btn = document.querySelector('.btn-submit');
+  btn.textContent = 'Enviando...';
+  btn.disabled = true;
+
+  const payload = {
+    _subject: `[Darwin IA] Formulario completado — ${empresa} — ${document.getElementById('nombre').value}`,
+    '01_Subempresa': empresa,
+    '02_Nombre': document.getElementById('nombre').value,
+    '03_Puesto': document.getElementById('puesto').value,
+    '04_Correo': document.getElementById('correo').value,
+    '05_Telefono': document.getElementById('telefono').value,
+    '06_Descripcion_empresa': document.getElementById('descripcionEmpresa').value,
+    '07_Zonas': document.getElementById('zonas').value,
+    '08_Horario': document.getElementById('horario').value || 'No especificado',
+    '09_Emergencias_fuera_horario': emergencia,
+    '10_Canales_contacto': canales,
+    '11_Frases_inicio_clientes': document.getElementById('frasesInicio').value,
+    '12_Proceso_atencion_paso_a_paso': document.getElementById('procesoCompleto').value,
+    '13_Datos_para_cotizar': document.getElementById('datosParaCotizar').value,
+    '14_Preguntas_frecuentes_y_respuestas': document.getElementById('preguntasFrecuentes').value,
+    '15_Cliente_ideal': document.getElementById('clienteIdeal').value,
+    '16_Cliente_no_ideal': document.getElementById('clienteNoIdeal').value,
+    '17_Restricciones_para_Darwin': document.getElementById('restricciones').value || 'Ninguna',
+    '18_Cuando_escalar_al_asesor': escalar,
+    '19_Otras_situaciones_escalar': document.getElementById('otrasEscalar').value || 'Ninguna',
+    '20_Notificacion_preferida': notif,
+    '21_Notas_finales': document.getElementById('notasFinales').value,
+  };
+
+  try {
+    const res = await fetch('https://formspree.io/f/xnjbeldo', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+
+    if (res.ok) {
+      document.getElementById('formWrap').style.display = 'none';
+      document.getElementById('successEmpresa').textContent = empresa;
+      document.getElementById('successScreen').style.display = 'block';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else {
+      throw new Error('Error en el servidor');
+    }
+  } catch (e) {
+    btn.textContent = 'Enviar información ✓';
+    btn.disabled = false;
+    alert('Hubo un error al enviar. Por favor intenta de nuevo o contacta a it@gruporapid.com');
+  }
+}
+</script>
+</body>
+</html>
